@@ -355,4 +355,51 @@ footer {
 .nav-menu a:hover {
     color: #e67e22;
 }
+/* Payment methods section in footer */
+.payment-methods {
+    margin-top: 1.5rem;
+    text-align: center;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255,255,255,0.2); /* subtle separator */
+}
 
+.payment-methods p {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    color: #ddd;
+}
+
+.card-logos {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;           /* space between logos */
+    align-items: center;
+}
+
+.payment-logo {
+    height: 36px;           /* adjust size as needed */
+    width: auto;
+    filter: brightness(0) invert(1);   /* makes them white — good for dark footer */
+    transition: transform 0.2s ease;
+}
+
+.payment-logo:hover {
+    transform: scale(1.1);
+}
+
+/* Optional: if using a single combined image */
+.payment-logos-combined {
+    height: 48px;
+    width: auto;
+    margin-top: 0.5rem;
+}
+
+/* Mobile adjustment */
+@media (max-width: 480px) {
+    .payment-logo {
+        height: 32px;
+    }
+    .card-logos {
+        gap: 1rem;
+    }
+}
