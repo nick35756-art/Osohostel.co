@@ -159,10 +159,13 @@ body {
     z-index: 1; 
 }
 
-.hero-content { 
-    position: relative; 
-    z-index: 2; 
+.hero-content {
+    position: relative;
+    z-index: 2;
     padding: 0 20px;
+    text-align: center;          /* This centers the text horizontally */
+    max-width: 900px;            /* Optional: prevents it from stretching too wide on large screens */
+    margin: 0 auto;              /* Centers the whole block if needed */
 }
 
 .hero h1 { 
