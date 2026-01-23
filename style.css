@@ -402,3 +402,23 @@ footer {
         gap: 1rem;
     }
 }
+.rooms-payment-banner {
+    background: #27ae60;           /* your primary green from .btn-primary */
+    color: white;
+    text-align: center;
+    padding: 12px;
+    margin: 1.5rem 0;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.rooms-payment-banner .card-logos {
+    margin-top: 8px;
+    gap: 1.5rem;
+}
+
+.rooms-payment-banner .payment-logo {
+    height: 32px;                  /* slightly smaller for banner */
+    filter: none;                  /* keep full color */
+}
