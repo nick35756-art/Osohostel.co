@@ -377,9 +377,8 @@ footer {
 }
 
 .payment-logo {
-    height: 36px;           /* adjust size as needed */
+    height: 42px;           /* bigger and more prominent */
     width: auto;
-    filter: brightness(0) invert(1);   /* makes them white — good for dark footer */
     transition: transform 0.2s ease;
 }
 
