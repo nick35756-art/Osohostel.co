@@ -35,6 +35,67 @@
         .lang-toggle span{margin:0 5px;font-weight:bold}
         .lang-toggle .active{color:#e67e22;text-decoration:underline}
         .logo-img{height:50px;margin-right:10px}
+
+        /* ===== BOOKING FORM ===== */
+        .booking-form {
+            max-width: 620px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e67e22;
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+        }
+
+        .booking-form .btn {
+            font-size: 1.1rem;
+            padding: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
     </style>
     <!-- Force HTTPS – fixes "Not secure" instantly -->
 <script>
@@ -159,9 +220,7 @@
                     <div class="price" data-en="From $50,000 COP / night" data-es="Desde $50.000 COP / noche">
                         Desde $50.000 COP / noche
                     </div>
-                    <a href="https://www.spanish.hostelworld.com/pwa/hosteldetails.php/OSO-Hostel/Buritaca/331575?from=2025-11-17&to=2025-11-18&guests=2&hpa_source=331575&hpa_rateplan_id=876023%7C2&hpa_room_id=1000094&utm_source=googlehotelfinder&utm_source=shared_property&utm_medium=clipboard&utm_campaign=331575&source=web_shared_property-331575"
-                       class="btn" target="_blank"
-                       data-en="Book" data-es="Reservar">Reservar</a>
+                    <a href="#reservas" class="btn" data-en="Book" data-es="Reservar">Reservar</a>
                 </div>
                 <div class="room-card">
                     <img src="https://i.imgur.com/hzIizVu.jpeg" alt="Habitación privada">
@@ -173,9 +232,7 @@
                     <div class="price" data-en="From $120,000 COP / night" data-es="Desde $120.000 COP / noche">
                         Desde $120.000 COP / noche
                     </div>
-                    <a href="https://www.spanish.hostelworld.com/pwa/hosteldetails.php/OSO-Hostel/Buritaca/331575?from=2025-11-17&to=2025-11-18&guests=2&hpa_source=331575&hpa_rateplan_id=876023%7C2&hpa_room_id=1000094&utm_source=googlehotelfinder&utm_source=shared_property&utm_medium=clipboard&utm_campaign=331575&source=web_shared_property-331575"
-                       class="btn" target="_blank"
-                       data-en="Book" data-es="Reservar">Reservar</a>
+                    <a href="#reservas" class="btn" data-en="Book" data-es="Reservar">Reservar</a>
                 </div>
             </div>
         </div>
@@ -341,16 +398,79 @@
         </div>
     </section>
 
-    <!-- Booking -->
+    <!-- Booking – Direct Form -->
     <section id="reservas" class="booking">
         <div class="container">
-            <h2 data-en="Book Your Stay" data-es="¡Reserva Tu Estadía!">¡Reserva Tu Estadía!</h2>
-            <div style="text-align:center;margin-top:20px;">
-                <a href="https://www.spanish.hostelworld.com/pwa/hosteldetails.php/OSO-Hostel/Buritaca/331575?from=2025-11-17&to=2025-11-18&guests=2&hpa_source=331575&hpa_rateplan_id=876023%7C2&hpa_room_id=1000094&utm_source=googlehotelfinder&utm_source=shared_property&utm_medium=clipboard&utm_campaign=331575&source=web_shared_property-331575"
-                   class="btn btn-primary" target="_blank">
-                    Reservar en Hostelworld
+            <h2 data-en="Book Your Stay Directly" data-es="¡Reserva Tu Estadía Directo!">¡Reserva Tu Estadía Directo!</h2>
+            
+            <p style="text-align:center; margin-bottom: 25px; color:#555;"
+               data-en="Book direct and save 10%. We’ll confirm availability quickly on WhatsApp."
+               data-es="Reserva directo y ahorra 10%. Confirmamos disponibilidad rápido por WhatsApp.">
+                Reserva directo y ahorra 10%. Confirmamos disponibilidad rápido por WhatsApp.
+            </p>
+
+            <form id="bookingForm" class="booking-form" onsubmit="return sendBooking(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-en="Check-in" data-es="Fecha de llegada">Fecha de llegada</label>
+                        <input type="date" id="checkin" name="checkin" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-en="Check-out" data-es="Fecha de salida">Fecha de salida</label>
+                        <input type="date" id="checkout" name="checkout" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label data-en="Room type" data-es="Tipo de habitación">Tipo de habitación</label>
+                        <select id="room" name="room" required>
+                            <option value="" data-en="Select..." data-es="Selecciona...">Selecciona...</option>
+                            <option value="Dormitorio 6 camas" data-en="6-Bed Dorm" data-es="Dormitorio 6 camas">Dormitorio 6 camas</option>
+                            <option value="Habitación Privada Doble" data-en="Private Double Room" data-es="Habitación Privada Doble">Habitación Privada Doble</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-en="Guests" data-es="Huéspedes">Huéspedes</label>
+                        <input type="number" id="guests" name="guests" min="1" max="6" value="2" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-en="Your name" data-es="Tu nombre">Tu nombre</label>
+                    <input type="text" id="name" name="name" required placeholder="Nombre completo">
+                </div>
+
+                <div class="form-group">
+                    <label data-en="WhatsApp or Phone" data-es="WhatsApp o Teléfono">WhatsApp o Teléfono</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+57 300 123 4567">
+                </div>
+
+                <div class="form-group">
+                    <label data-en="Email (optional)" data-es="Email (opcional)">Email (opcional)</label>
+                    <input type="email" id="email" name="email" placeholder="tu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label data-en="Message / special requests" data-es="Mensaje / peticiones especiales">Mensaje / peticiones especiales</label>
+                    <textarea id="message" name="message" rows="3" placeholder="Llegamos tarde, necesitamos cuna, etc."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width:100%; margin-top:10px;">
+                    <span data-en="Send to WhatsApp + Email" data-es="Enviar a WhatsApp + Email">
+                        Enviar a WhatsApp + Email
+                    </span>
+                </button>
+            </form>
+
+            <p style="text-align:center; margin-top: 25px; font-size:0.95rem; color:#666;">
+                <span data-en="Prefer Hostelworld?" data-es="¿Prefieres Hostelworld?"></span>
+                <a href="https://www.spanish.hostelworld.com/pwa/hosteldetails.php/OSO-Hostel/Buritaca/331575" 
+                   target="_blank" style="color:#e67e22; font-weight:bold;"
+                   data-en="Book on Hostelworld →" data-es="Reservar en Hostelworld →">
+                    Reservar en Hostelworld →
                 </a>
-            </div>
+            </p>
         </div>
     </section>
 
@@ -408,10 +528,105 @@
     </script>
 
     <!-- Lightbox JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script><!-- Floating WhatsApp Button – paste right before </body> -->
-<a href="https://wa.me/573217637996" target="_blank" class="whatsapp-float" title="Chatea con nosotros en WhatsApp">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-</a>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+
+    <!-- Booking Form Script -->
+    <script>
+    function sendBooking(e) {
+        e.preventDefault();
+
+        const checkin  = document.getElementById('checkin').value;
+        const checkout = document.getElementById('checkout').value;
+        const room     = document.getElementById('room').value;
+        const guests   = document.getElementById('guests').value;
+        const name     = document.getElementById('name').value.trim();
+        const phone    = document.getElementById('phone').value.trim();
+        const email    = document.getElementById('email').value.trim();
+        const message  = document.getElementById('message').value.trim();
+
+        // Validation
+        if (!checkin || !checkout || !room || !name || !phone) {
+            alert('Por favor completa todos los campos obligatorios / Please fill all required fields');
+            return false;
+        }
+
+        if (new Date(checkout) <= new Date(checkin)) {
+            alert('La fecha de salida debe ser después de la llegada / Check-out must be after check-in');
+            return false;
+        }
+
+        // ===== Build the message =====
+        let text = `🐻 *Nueva solicitud de reserva - OSO Hostel*%0A%0A`;
+        text += `*Nombre:* ${name}%0A`;
+        text += `*WhatsApp del huésped:* ${phone}%0A`;
+        if (email) text += `*Email del huésped:* ${email}%0A`;
+        text += `*Llegada:* ${checkin}%0A`;
+        text += `*Salida:* ${checkout}%0A`;
+        text += `*Habitación:* ${room}%0A`;
+        text += `*Huéspedes:* ${guests}%0A`;
+        if (message) text += `*Mensaje:* ${message}%0A`;
+        text += `%0A---%0AEnviado desde osohostal.co`;
+
+        // ===== 1. First WhatsApp =====
+        const whatsapp1 = `https://wa.me/573217637996?text=${text}`;
+        window.open(whatsapp1, '_blank');
+
+        // ===== 2. Second WhatsApp (small delay so browser allows it) =====
+        setTimeout(() => {
+            const whatsapp2 = `https://wa.me/573217671593?text=${text}`;
+            window.open(whatsapp2, '_blank');
+        }, 800);
+
+        // ===== 3. Email =====
+        const subject = encodeURIComponent(`Nueva reserva OSO Hostel - ${name}`);
+        const body = encodeURIComponent(
+`Nueva solicitud de reserva desde la web:
+
+Nombre: ${name}
+WhatsApp: ${phone}
+Email: ${email || 'No proporcionado'}
+Llegada: ${checkin}
+Salida: ${checkout}
+Habitación: ${room}
+Huéspedes: ${guests}
+Mensaje: ${message || 'Ninguno'}
+
+---
+Enviado desde osohostal.co`
+        );
+
+        const mailto = `mailto:hostalworld.primary719@passmail.net?subject=${subject}&body=${body}`;
+        
+        // Small delay so it doesn't fight with WhatsApp
+        setTimeout(() => {
+            window.location.href = mailto;
+        }, 1500);
+
+        return false;
+    }
+
+    // Set minimum dates
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        const checkinInput = document.getElementById('checkin');
+        const checkoutInput = document.getElementById('checkout');
+
+        if (checkinInput) {
+            checkinInput.min = today;
+            checkinInput.addEventListener('change', function() {
+                checkoutInput.min = this.value;
+            });
+        }
+        if (checkoutInput) {
+            checkoutInput.min = today;
+        }
+    });
+    </script>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/573217637996" target="_blank" class="whatsapp-float" title="Chatea con nosotros en WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
 
 <style>
 .whatsapp-float {
@@ -424,7 +639,7 @@
     border-radius: 50%;
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     transition: all 0.3s ease;
-    background: #25d366;           /* WhatsApp green */
+    background: #25d366;
     display: flex;
     align-items: center;
     justify-content: center;
